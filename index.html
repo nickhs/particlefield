@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <title>ParticleField.js - Pretty Points for all</title>
-		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/styles.css">
         <script type="text/javascript" src="js/particlefield.js"></script>
     </head>
@@ -14,7 +13,7 @@
                 <h1><span class="name">ParticleField</span></h1>
                 <p><span class="name">ParticleField</span> lets you create canvas backed particle fields. It's based on pure Javascript and has no dependencies.
                 Built to be small, weighing in under 200 lines of code, and as performant as possible while remaining readable.
-                It's distributed under the <a href="FIXME">MIT</a> License and hosted on <a href="FIXE">Github</a>.</p>
+                It's distributed under the <a href="LICENSE">MIT</a> License and hosted on <a href="http://github.com/nickhs/particlefield">Github</a>.</p>
 
                 <p><span class="name">ParticleField</span> can interact with your mouse or touch device. Alternatively you're free to run arbitraty functions through it.</p>
             </header>
@@ -23,14 +22,14 @@
                 <canvas id="bigField"></canvas>
 
                 <div class="buttons">
-                    <a href="FIXME" id="download">Download</a>
-                    <a href="FIXME" id="fork">Fork Me</a>
+                    <a href="build/particlefield.js" id="download">Download</a>
+                    <a href="http://github.com/nickhs/particlefield" id="fork">Fork Me</a>
                 </div>
             </section>
 
             <section class="docs">
                 <h1>Quickstart</h1>
-                <p>You can download the minified build <a href="FIXME">from Github</a></p>
+                <p>You can download the minified build <a href="build/particlefield.min.js.gz">from Github</a>.</p>
                 <p>Create a new <span class="name">ParticleField</span> object.</p>
                 <code>var pf = new ParticleField();</code>
                 <p>Bind and draw it on an element. This will draw the grid but it won't react to mouse or animation elements.</p>
@@ -71,7 +70,8 @@
 
 	    <h1>Sizing</h1>
 	    <p>Sizing is a tad complicated. <span class="name">ParticleField</span> calculates your height and width by doing the following:</p>
-	    <code>var height = (opts.rows * opts.spacing) + (opts.margin * 2)</code>
+	    <code>var height = (opts.rows * opts.spacing) + (opts.margin * 2);</code>
+	    <p>Tweaking those variables as you see fit will get you the dimensions you want.</p>
 
 	    <h1>All functions</h1>
 <code>draw() // Draw a frame
