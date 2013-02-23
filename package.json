@@ -1,22 +1,22 @@
 {
-    'name': 'particlefield',
-    'version': '0.0.1',
-    'description': 'Particle fields everywhere',
+    "name": "particlefield",
+    "version": "0.0.1",
+    "description": "Particle fields everywhere",
 
-    'keywords': ['particle', 'field', 'visualization'],
+    "keywords": ["particle", "field", "visualization"],
 
-    'contributers': [
-        {'name': 'Nick HS', 'url': 'http://github.com/nickhs'}
+    "contributers": [
+        {"name": "Nick HS", "url": "http://github.com/nickhs"}
     ],
 
-    'repository': {
-        'type': 'git',
-        'url': 'http://github.com/nickhs/particlefield.git'
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/nickhs/particlefield.git"
     },
 
-    'dependencies': {},
+    "dependencies": {},
 
-    'devDependencies': {
-        'uglify-js': '1.3.3'
+    "devDependencies": {
+        "uglify-js": "1.3.3"
     }
 }
