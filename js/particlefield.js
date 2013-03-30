@@ -34,7 +34,7 @@ var ParticleField = (function(options) {
 
   function draw(holder) {
     if (!holder) {
-      throw "You need to specify a canvas element";
+      throw 'You need to specify a canvas element';
     }
 
     canvas = holder;
@@ -89,8 +89,8 @@ var ParticleField = (function(options) {
           p.vy += f * Math.sin(tmp);
         }
 
-        p.x += (p.vx *= .95) + (p.orig_x - p.x) * .25;
-        p.y += (p.vy *= .95) + (p.orig_y - p.y) * .25;
+        p.x += (p.vx *= 0.95) + (p.orig_x - p.x) * 0.25;
+        p.y += (p.vy *= 0.95) + (p.orig_y - p.y) * 0.25;
       }
 
       alt = !alt;
@@ -119,8 +119,8 @@ var ParticleField = (function(options) {
     }
 
     var time = Date.now() * 0.0015;
-    mx = width * 0.5 + (0.4 * width * Math.cos(time))
-    my = height * 0.5 + (0.6 * height * Math.cos(time) * Math.sin(time))
+    mx = width * 0.5 + (0.4 * width * Math.cos(time));
+    my = height * 0.5 + (0.6 * height * Math.cos(time) * Math.sin(time));
     return {mx: mx, my: my}
   }
 
