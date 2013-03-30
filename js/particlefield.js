@@ -1,11 +1,4 @@
 var ParticleField = (function(options) {
-  var particle = {
-    vx: 0,
-    vy: 0,
-    x: 0,
-    y: 0
-  };
-
   var opts = {
     rows: 100,
     cols: 240,
@@ -23,14 +16,28 @@ var ParticleField = (function(options) {
   var height;
   var customAnim;
 
-  var particles = [];
   var mx = 0;
   var my = 0;
-  var alt = false;
   var manual = false;
   var running = false;
 
+  var origx_view;
+  var origy_view;
+  var x_view;
+  var y_view;
+  var vx_view;
+  var vy_view;
+
   setOptions(options);
+
+  function _createArrays() {
+    origx_view = new Uint16Array(opts.num_particles * 2);
+    origy_view = new Uint16Array(opts.num_particles * 2);
+    x_view = new Float64Array(opts.num_particles * 8);
+    y_view = new Float64Array(opts.num_particles * 8);
+    vx_view = new Float64Array(opts.num_particles * 8);
+    vy_view = new Float64Array(opts.num_particles * 8);
+  }
 
   function draw(holder) {
     if (!holder) {
@@ -45,11 +52,10 @@ var ParticleField = (function(options) {
     width = canvas.width = opts.cols * opts.spacing + opts.margin * 2;
     height = canvas.height = opts.rows * opts.spacing + opts.margin * 2;
 
+    _createArrays();
     for (var i = 0; i < opts.num_particles; i++) {
-      var p = Object.create(particle);
-      p.x = p.orig_x = opts.margin + opts.spacing * (i % opts.cols);
-      p.y = p.orig_y = opts.margin + opts.spacing * Math.floor(i / opts.cols);
-      particles[i] = p;
+      x_view[i] = origx_view[i] = opts.margin + opts.spacing * (i % opts.cols);
+      y_view[i] = origy_view[i] = opts.margin + opts.spacing * Math.floor(i / opts.cols);
     }
 
     if (opts.mouse) {
@@ -65,49 +71,41 @@ var ParticleField = (function(options) {
   }
 
   function frame() {
-    if (alt) {
-      if (!manual) {
-        var movement = animation();
-        mx = movement.mx;
-        my = movement.my;
-      }
-
-      for (var o = 0; o < opts.num_particles; o++) {
-        var p = particles[o];
-
-        // Determine distance travelled
-        var dx = mx - p.x;
-        var dy = my - p.y;
-        var dist = (dx * dx) + (dy * dy);
-
-
-        if (dist < opts.radius) {
-          var tmp = Math.atan2(dy, dx);
-          var f = -opts.radius / dist;
-
-          p.vx += f * Math.cos(tmp);
-          p.vy += f * Math.sin(tmp);
-        }
-
-        p.x += (p.vx *= 0.95) + (p.orig_x - p.x) * 0.25;
-        p.y += (p.vy *= 0.95) + (p.orig_y - p.y) * 0.25;
-      }
-
-      alt = !alt;
-    } else {
-      var image = ctx.createImageData(width, height);
-      for (var i = 0; i < opts.num_particles; i++) {
-        var p = particles[i];
-        var index = (Math.floor(p.x)  + (Math.floor(p.y) * width)) * 4;
-        image.data[index] = opts.color[0];
-        image.data[index+1] = opts.color[1];
-        image.data[index+2] = opts.color[2];
-        image.data[index+3] = opts.color[3];
-      }
-
-      ctx.putImageData(image, 0, 0);
-      alt = !alt;
+    if (!manual) {
+      var movement = animation();
+      mx = movement.mx;
+      my = movement.my;
     }
+
+    for (var o = 0; o < opts.num_particles; o++) {
+      // Determine distance travelled
+      var dx = mx - x_view[o];
+      var dy = my - y_view[o];
+      var dist = (dx * dx) + (dy * dy);
+
+
+      if (dist < opts.radius) {
+        var tmp = Math.atan2(dy, dx);
+        var f = -opts.radius / dist;
+
+        vx_view[o] += f * Math.cos(tmp);
+        vy_view[o] += f * Math.sin(tmp);
+      }
+
+      x_view[o] += (vx_view[o] *= 0.95) + (origx_view[o] - x_view[o]) * 0.25;
+      y_view[o] += (vy_view[o] *= 0.95) + (origy_view[o] - y_view[o]) * 0.25;
+    }
+
+    var image = ctx.createImageData(width, height);
+    for (var i = 0; i < opts.num_particles; i++) {
+      var index = (Math.floor(x_view[i])  + (Math.floor(y_view[i]) * width)) * 4;
+      image.data[index] = opts.color[0];
+      image.data[index+1] = opts.color[1];
+      image.data[index+2] = opts.color[2];
+      image.data[index+3] = opts.color[3];
+    }
+
+    ctx.putImageData(image, 0, 0);
 
     if (running)
       requestAnimationFrame(frame);
@@ -121,7 +119,7 @@ var ParticleField = (function(options) {
     var time = Date.now() * 0.0015;
     mx = width * 0.5 + (0.4 * width * Math.cos(time));
     my = height * 0.5 + (0.6 * height * Math.cos(time) * Math.sin(time));
-    return {mx: mx, my: my}
+    return {mx: mx, my: my};
   }
 
   function getOptions() {
@@ -129,7 +127,6 @@ var ParticleField = (function(options) {
   }
 
   function setOptions(options) {
-    console.log('here');
     for (var key in options) {
       opts[key] = options[key];
     }
