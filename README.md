@@ -4,4 +4,4 @@ Canvas-backed Particle Fields with ease. Distributed under the MIT license, look
 
 For more information check out: <http://nickhs.github.com/particlefield/>
 
-Library code resides in [js/particlefield.js]("https://github.com/nickhs/particlefield/blob/master/js/particlefield.js")
+Library code actually resides in [js/particlefield.js](https://github.com/nickhs/particlefield/blob/master/js/particlefield.js)
