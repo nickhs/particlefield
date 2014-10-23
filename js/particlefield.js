@@ -14,7 +14,7 @@ var ParticleField = (function(options) {
     color: [0, 0, 0, 255]
   };
 
-  // Variables used later internally */
+  // Variables used later internally
   var canvas;
   var ctx;
   var width;
@@ -27,7 +27,7 @@ var ParticleField = (function(options) {
   var mx = 0;
   var my = 0;
 
-  // determines if the animation should
+  // Determines if the animation should
   // be running or if the field should be
   // in "interactive"/mouse mode
   var manual = false;
